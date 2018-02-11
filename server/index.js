@@ -7,10 +7,10 @@ const server = http.createServer();
 const port = 8080;
 
 server.on('request', function (req, res) {
-    router.route(req,res);
+  router.route(req,res);
 });
 
 server.listen(port, function () {
-    console.log('Server running');
-    db.dbConnect();
+  console.log('Server running');
+  db.dbConnect();
 });
