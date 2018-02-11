@@ -1,0 +1,32 @@
+html, body{
+    margin: 0;
+    height: 100%;
+}
+
+#nav-bar{
+    width: 200px;
+    height: 100%;
+    border: 1px solid black;
+    margin-right: 0px;
+}
+
+ul{
+    list-style-type: none;
+}
+
+li{
+    padding: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#sum{
+    border: none;
+}
+
+#work-area{
+    margin-top: 0;
+    float: left;
+    position: absolute;
+    margin-left: 220px;
+}
