@@ -3,7 +3,8 @@ const fs = require('fs');
 const url = require('url');
 const stat = require('node-static');
 const db = require('./db');
-const insert = require('./insertData');
+const insertData = require('./insertData');
+const getData = require('./getData');
 
 const fileServer = new stat.Server('../public/', {
   cache: 3600,
@@ -14,21 +15,30 @@ const route = (req,res) => {
   const data = url.parse(req.url, true).query;
   const path = url.parse(req.url, true).pathname;
 
-  if (path === '/' || path === 'home'){
-    res.end(fs.readFileSync('../public/views/index.html'));
-  }
+  if (Object.keys(data).length) {
 
-  if (req.method == 'POST'){
-    insert.add(data, db);
-    res.end();
-  }
+    if (req.method == 'POST') {
 
-  if (path.indexOf('styles') || path.indexOf('scripts')){
-    req.addListener( 'end', function () {
-      fileServer.serve( req, res );
-    } ).resume();
-  }
+      insertData.insert(data, db);
+      res.end();
+    }
+    if (req.method == 'GET') {
+      getData.get(data, db, (response) => {
+        res.end(response);
+      });
+    }
+  } else {
 
+    if (path.indexOf('styles') || path.indexOf('scripts')) {
+
+      req.addListener('end', function () {
+        fileServer.serve(req, res);
+      }).resume();
+    }
+    if (path === '/' || path === '/home') {
+      res.end(fs.readFileSync('../public/views/index.html'));
+    }
+  }
 };
 
 module.exports.route = route;

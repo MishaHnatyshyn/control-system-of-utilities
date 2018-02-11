@@ -52,13 +52,32 @@ const calculate = (target) => {
 };
 
 const statistic = (path) => {
-
+  const target = path.replace('/','');
+  request(target, 'GET', (data)=>{
+    displayTable(data, target);
+  });
 };
 
 const addFormGenerate = (target =  ['gas','electricity','water','garbage','kvartplata','canalization']) => {
 
   let result = '';
-
+  if (target.length > 1)result += `
+     
+<select name="month" id="month">
+<option value="January">Січень</option>
+<option value="February">Лютий</option>
+<option value="March">Березень</option>
+<option value="April">Квітень</option>
+<option value="May">Травень</option>
+<option value="June">Червень</option>
+<option value="July">Липень</option>
+<option value="August">Серпень</option>
+<option value="September">Вересень</option>
+<option value="October">Жовтень</option>
+<option value="November">Листопад</option>
+<option value="December">Гудень</option>
+</select><br>
+`;
   for (let i = 0; i < target.length;i++){
     result += `<div id="month${target[i]}">
     <h2>${target[i]}</h2>
@@ -84,7 +103,6 @@ const addFormGenerate = (target =  ['gas','electricity','water','garbage','kvart
 
     if (target.length === 1) result += `
 <select name="month" id="month">
-
 <option value="January">Січень</option>
 <option value="February">Лютий</option>
 <option value="March">Березень</option>
@@ -98,33 +116,113 @@ const addFormGenerate = (target =  ['gas','electricity','water','garbage','kvart
 <option value="November">Листопад</option>
 <option value="December">Гудень</option>
 </select><br>
+
 <input type="button" value="Відправити" onclick="postData('${target[i]}')">`;
 
     result += '</form>';
   }
-  if (target.length > 1) result += '<br><button>Add all values</button>';
+  if (target.length > 1) result += '<br><button onclick="postDataMany()">Add all values</button>';
   return result;
 };
 
 const postData = (target) => {
 
   const data = {};
-  data.target = target;
-  data.sum = document.getElementById('sum-'+target).value.replace(' грн.','');
-  data.cost = document.getElementById('cost-'+target).value;
+  data[target] = {};
+  data[target].sum = document.getElementById('sum-'+target).value.replace(' грн.','');
+  data[target].cost = document.getElementById('cost-'+target).value;
   data.month = document.getElementById('month').value;
   if(target !== 'garbage' && target !== 'kvartplata'){
-    data.prev = document.getElementById('value-befor-'+ target).value;
-    data.curr = document.getElementById('value-now-'+ target).value;
+    data[target].prev = document.getElementById('value-befor-'+ target).value;
+    data[target].curr = document.getElementById('value-now-'+ target).value;
   }
   document.getElementById('addTo'+target).reset();
-  const xhr = new XMLHttpRequest();
+  request(data,'POST');
+};
 
+const postDataMany = () => {
+  const targetList = ['gas','electricity','water','garbage','kvartplata','canalization'];
+  const targets = [];
+  const data = {};
+
+  for(let i = 0; i < targetList.length;i++){
+    let add = false;
+    const obj = {};
+    obj.sum = document.getElementById('sum-'+targetList[i]).value.replace(' грн.','');
+    obj.cost = document.getElementById('cost-'+targetList[i]).value;
+
+    if(obj.sum  !== '' && obj.cost !== '')add = true;
+
+    if(targetList[i] !== 'garbage' && targetList[i] !== 'kvartplata'){
+      obj.prev = document.getElementById('value-befor-'+ targetList[i]).value;
+      obj.curr = document.getElementById('value-now-'+ targetList[i]).value;
+      if(!obj.prev || !obj.curr)add = false;
+    }
+
+    if (add) {
+      data[targetList[i]] = obj;
+    }
+    document.getElementById('addTo'+targetList[i]).reset();
+  }
+  if (Object.keys(data).length) {
+    data.month = document.getElementById('month').value;
+    request(data,'POST');
+  }
+};
+
+const request = (data, method, callback) => {
+  const xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
+      if (method === 'POST')alert('Дані успішно додано');
+      else callback(JSON.parse(this.responseText));
     }
   };
-  xhr.open('POST', '?data='+JSON.stringify(data), true);
+  xhr.open(method, '?data='+JSON.stringify(data), true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send();
+};
+
+const displayTable = (data, target) => {
+  if (data.length === 0) {
+    workArea.innerHTML += '<br><h3>Данних немає</h3>';
+    return;
+  }
+  let long = true;
+  if (target === 'garbage' || target === 'canalization') long = false;
+  let table = `
+  <br><br> 
+  <table style="width:100%">
+  <tr>
+  <th>Mісяць</th>`;
+
+  table += long ? `
+  <th>Попередній показник</th>
+  <th>Поточний показник</th>
+  <th>Використано</th>` :'';
+
+  table += ` 
+  <th>Тариф</th>
+  <th>Ціна</th>
+  <th>Оплачено</th>
+  </tr>`;
+
+  for (let i =0 ; i<data.length;i++){
+    table += ` <tr>
+    <td>${data[i].month}</td>`;
+
+    table += long ? `
+    <td>${data[i].previous_value}</td>
+    <td>${data[i].current_value}</td> 
+    <td>${data[i].current_value - data[i].previous_value}</td>` :'';
+
+    table += `
+    <td>${data[i].cost}</td>
+    <td>${data[i].sum} грн.</td> 
+    <td>TRUE</td>
+    </tr>`;
+
+  }
+  table += '</table>';
+  workArea.innerHTML += table;
 };

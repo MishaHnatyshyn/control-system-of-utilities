@@ -30,3 +30,9 @@ li{
     position: absolute;
     margin-left: 220px;
 }
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
