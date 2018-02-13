@@ -17,6 +17,7 @@ const insert = (data, db) => {
     obj.time_of_record = new Date();
     obj.user = 'user1';
     obj.personal_account = '0000';
+    obj.is_paied = info.is_paied;
     db.mydb.collection(key).insertOne(obj);
   }
 };

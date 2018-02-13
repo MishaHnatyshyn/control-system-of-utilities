@@ -23,7 +23,7 @@ const route = (req,res) => {
       res.end();
     }
     if (req.method == 'GET') {
-      getData.get(data, db, (response) => {
+      getData.getOne(data, db, (response) => {
         res.end(response);
       });
     }

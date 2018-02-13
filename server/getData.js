@@ -1,8 +1,14 @@
 'use strict';
 
-const getOne = (query, db, callback) => {
-  db.mydb.collection(query.data.replace(/"/g, '')).find({}).toArray((err, result)=>{
-    callback(JSON.stringify(result));
+const getOne = (request, db, callback) => {
+  const data = JSON.parse(request.data);
+  const query = {};
+  for (let key in data.query){
+      query[key] = data.query[key];
+  }
+
+  db.mydb.collection(data.category).find(query).toArray((err, result) => {
+      callback(JSON.stringify(result));
   });
 };
 
