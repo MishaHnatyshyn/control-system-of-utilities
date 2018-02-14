@@ -14,10 +14,11 @@ const insert = (data, db) => {
     obj.cost = info[key].cost;
     obj.sum = info[key].sum;
     obj.month = info.month;
+    obj.year = info.year;
     obj.time_of_record = new Date();
     obj.user = 'user1';
     obj.personal_account = '0000';
-    obj.is_paied = info.is_paied;
+    obj.is_paid = info[key].is_paid;
     db.mydb.collection(key).insertOne(obj);
   }
 };

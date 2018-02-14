@@ -23,7 +23,13 @@ const route = (req,res) => {
       res.end();
     }
     if (req.method == 'GET') {
+
+      if (req.headers.cause === 'get-one')
       getData.getOne(data, db, (response) => {
+        res.end(response);
+      });
+      else if (req.headers.cause === 'get-many')
+      getData.getMany(data, db, (response) => {
         res.end(response);
       });
     }
