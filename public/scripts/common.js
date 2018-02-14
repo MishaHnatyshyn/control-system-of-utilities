@@ -208,6 +208,7 @@ const request = (data, method, header, callback) => {
 let graphData = [];
 const displayTable = (data, target) => {
     graphData = [];
+    graphData.push(['Month', 'Sum',]);
   let tableHTML = document.getElementById('table');
   if (data.length === 0) {
       tableHTML.innerHTML = '<br><h3>Данних немає</h3>';
@@ -249,7 +250,7 @@ const displayTable = (data, target) => {
     graphData.push([data[i].month + ' ' +data[i].year, parseInt(data[i].sum)])
 
   }
-  graphData.push(['Month', 'Sum',]);
+
   table += '</table><div id="curve_chart" style="width: 900px; height: 500px"></div>';
 
 
@@ -383,8 +384,7 @@ const getYearOfLastMonth = () => {
 };
 
 function genrateGraphGategory (){
-    graphData.reverse()
-    console.log(graphData)
+    // graphData.reverse()
     const data = google.visualization.arrayToDataTable(graphData);
 
     const options = {
