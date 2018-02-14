@@ -188,7 +188,7 @@ const postDataMany = () => {
     data.year = document.getElementById('year').value;
     request(data,'POST');
   }
-  
+
 };
 
 const request = (data, method, header, callback) => {
@@ -205,7 +205,9 @@ const request = (data, method, header, callback) => {
   xhr.send();
 };
 
+let graphData = [];
 const displayTable = (data, target) => {
+  graphData = [['Month', 'Sum',]]
   let tableHTML = document.getElementById('table');
   if (data.length === 0) {
       tableHTML.innerHTML = '<br><h3>Данних немає</h3>';
@@ -244,14 +246,17 @@ const displayTable = (data, target) => {
     <td>${data[i].sum} грн.</td> 
     <td>${data[i].is_paid}</td>
     </tr>`;
+    graphData.push([data[i].month, parseInt(data[i].sum)])
 
   }
-  table += '</table>';
+  table += '</table><div id="curve_chart" style="width: 900px; height: 500px"></div>';
 
 
     tableHTML.innerHTML = table;
-};
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(genrateGraphGategory);
 
+};
 const monthSelector = `
 <select name="month" id="month">
 <option value="January">Січень</option>
@@ -374,4 +379,19 @@ const getLastMonth = () => {
 const getYearOfLastMonth = () => {
   const date = new Date();
   return (date.getMonth() - 1 >= 0) ? date.getFullYear():date.getFullYear()-1;
+};
+
+function genrateGraphGategory (){
+    const data = google.visualization.arrayToDataTable(graphData);
+
+    const options = {
+        title: 'Graph Display',
+        legend: { position: 'right' },
+        hAxis: {title: 'Month'},
+        vAxis: {title: 'Sum, грн.'}
+    };
+
+    const chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+    chart.draw(data, options);
+
 };
