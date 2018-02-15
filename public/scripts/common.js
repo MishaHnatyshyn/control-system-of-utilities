@@ -3,29 +3,38 @@
 let workArea;
 
 const navOpen = (path) => {
-  workArea = document.getElementById('work-area');
+    workArea = document.getElementById('work-area');
 
-  if (path === '/statistics') {
-    workArea.innerHTML =
-            `    <button onclick="globalStatistic('last-month')">Statistic for last month</button><br>
-                 <button onclick="globalStatistic('month')">Statistic for:</button>${monthSelector.replace('<br>','') + yearSelector}
-                 <button onclick="globalStatistic('this-year')">Statistic for this year</button><br>
-                 <button onclick="globalStatistic('last-year')">Statistic for last year</button>  
+    if (path === '/statistics') {
+        workArea.innerHTML =
+            `   <div class="addForm">
+                <ul>
+                <li onclick="globalStatistic('last-month')">Statistic for last month</li>
+                <li><div><span style="height: 100%" onclick="globalStatistic('month')">Statistic for:</span>${monthSelector.replace('<br>', '')}${yearSelector}</div> </li>
+                <li onclick="globalStatistic('this-year')">Statistic for this year</li>
+                <li onclick="globalStatistic('last-year')">Statistic for last year</li>
+                </ul>  
+                 </div>
                  <div id="table"></div>`;
-      document.getElementById('month').value = monthList[getLastMonth()]
-      document.getElementById('year').value = new Date().getFullYear()
-  } else if(path === '/currentMonth'){
-    workArea.innerHTML = addFormGenerate();
-      document.getElementById('month').value = monthList[getLastMonth()]
-      document.getElementById('year').value = new Date().getFullYear()
-  }else
-    workArea.innerHTML =
-
-        `   
-    <h2>${path.replace('/','')}</h2>
-    <button onclick="add('${path}')">Add new values</button><br>
-             <button onclick="statistic('${path}')">Look statistic</button>  `;
-
+        document.getElementById('month').value = monthList[getLastMonth()]
+        document.getElementById('year').value = new Date().getFullYear()
+    } else if (path === '/currentMonth') {
+        workArea.innerHTML = addFormGenerate();
+        document.getElementById('month').value = monthList[getLastMonth()]
+        document.getElementById('year').value = new Date().getFullYear()
+    } else {
+        let category = path.replace('/', '');
+        category = category[0].toUpperCase() + category.slice(1);
+        workArea.innerHTML =
+        `  <div class="addForm"> 
+    <ul>
+    <li id="categoryName">${category}</li>
+    <li onclick="add('${path}')">Add new values</li>
+    <li onclick="statistic('${path}')">Look statistic</li>
+</ul>
+    
+    </div>`;
+}
 
 };
 
@@ -35,7 +44,19 @@ const getBlock = (id) => {
 
 const add = (path) => {
   const target = path.replace('/','');
-  workArea.innerHTML = addFormGenerate([target]);
+    let category = path.replace('/', '');
+    category = category[0].toUpperCase() + category.slice(1);
+    workArea.innerHTML =
+        `  <div class="addForm"> 
+    <ul>
+    <li id="categoryName">${category}</li>
+    <li onclick="add('${path}')">Add new values</li>
+    <li onclick="statistic('${path}')">Look statistic</li>
+</ul>
+    
+    </div>`;
+
+  workArea.innerHTML += addFormGenerate([target]);
 };
 
 const calculate = (target) => {
@@ -58,12 +79,22 @@ const calculate = (target) => {
 
 const statistic = (path) => {
   const obj = {};
+    let category = path.replace('/', '');
+    category = category[0].toUpperCase() + category.slice(1);
 
     const target = path.replace('/','');
     obj.category = target;
     obj.query = {};
 
     workArea.innerHTML = `
+<div class="addForm"> 
+    <ul>
+    <li id="categoryName">${category}</li>
+    <li onclick="add('${path}')">Add new values</li>
+    <li onclick="statistic('${path}')">Look statistic</li>
+</ul>
+    
+    </div>
   <div id="filters">
     <form id="form-filter" onchange="filter('${target}')">
         <label for="month">Статистика за:</label>
@@ -207,6 +238,7 @@ const request = (data, method, header, callback) => {
 
 let graphData = [];
 const displayTable = (data, target) => {
+
     graphData = [];
     graphData.push(['Month', 'Sum',]);
   let tableHTML = document.getElementById('table');
@@ -218,7 +250,7 @@ const displayTable = (data, target) => {
   if (target === 'garbage' || target === 'kvartplata') long = false;
   let table = `
   <br><br> 
-  <table style="width:100%">
+  <table>
   <tr>
   <th>Mісяць</th>`;
 
@@ -319,34 +351,36 @@ const globalStatistic = (cause) => {
 };
 
 const displayTableGlobal = (data) => {
+    graphData = [];
+    graphData.push(['Month', 'Sum',]);
     let tableHTML = document.getElementById('table');
     let table ='';
 
+
+let sum = 0;
     if (Object.keys(data).length === 0) {
         tableHTML.innerHTML = '<h3>Данних немає</h3>';
         return;
     }
-    else table =`<h2>${data[Object.keys(data)[0]].gas.year}</h2>`
+else table =`<h2 id="yearDisplay">${data[Object.keys(data)[0]].gas.year}</h2>`
     for (let keykey in data) {
 
         table += `
         <table>
+       
         <tr>
-        <th>${keykey}</th>
-        </tr>
-        <tr>
-        <td></td>
-        <td>Попередній показник:</td>
-        <td>Наступний показник:</td>
-        <td>Використано:</td>
-        <td>Тариф:</td>
-        <td>Сума:</td>
-        <td>Оплачено:</td>
+        <th style="font-size: larger;color: black;text-shadow: none">${keykey}</th>
+        <th>Попередній показник:</th>
+        <th>Наступний показник:</th>
+        <th>Використано:</th>
+        <th>Тариф:</th>
+        <th>Оплачено:</th>
+        <th>Сума:</th>
         </tr>
         `;
 
         for (let key in data[keykey]) {
-
+            sum +=parseInt(data[keykey][key].sum);
             let long = true;
             if (key === 'garbage' || key === 'kvartplata') long = false;
             table += `
@@ -360,15 +394,34 @@ const displayTableGlobal = (data) => {
 
             table += `
     <td>${data[keykey][key].cost}</td>
-    <td>${data[keykey][key].sum} грн.</td> 
     <td>${data[keykey][key].is_paid}</td>
+    <td>${data[keykey][key].sum} грн.</td> 
     </tr>
       `;
         }
-        table += '</table>';
-    }
-    tableHTML.innerHTML = table;
+        table += `
+<tr id="last">
+<td>Всього:</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>${sum + ' грн.'}</td>
+</tr>
+</table>`;
+        graphData.push([keykey, sum,]);
 
+    }
+
+    table += '<div id="curve_chart" style="width: 900px; height: 500px"></div>';
+
+
+    tableHTML.innerHTML = table;
+    if (Object.keys(data).length > 1) {
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(genrateGraphGategory);
+    }
 };
 
 const getLastMonth = () => {
@@ -384,7 +437,6 @@ const getYearOfLastMonth = () => {
 };
 
 function genrateGraphGategory (){
-    // graphData.reverse()
     const data = google.visualization.arrayToDataTable(graphData);
 
     const options = {
