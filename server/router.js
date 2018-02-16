@@ -44,6 +44,24 @@ const route = (req,res) => {
     if (path === '/' || path === '/home') {
       res.end(fs.readFileSync('../public/views/index.html'));
     }
+    if (path === '/cabinet'){
+        res.end(fs.readFileSync('../public/views/cabinet.html'));
+    }
+    if (path === '/current-month'){
+        res.end(fs.readFileSync('../public/views/current-month.html'));
+    }
+    if (path === '/statistics'){
+        res.end(fs.readFileSync('../public/views/statistics.html'));
+    }
+    if (path === '/gas' || path === '/electricity' || path === '/garbage' || path === '/canalization' || path === '/kvartplata'){
+        let response = fs.readFileSync('../public/views/category.html','utf8');
+        const catName = path.replace('/', '')[0].toUpperCase() + path.replace('/', '').slice(1);
+        response = response.replace('***CATEGORY_NAME***', catName);
+        response = response.replace('***CATEGORY_NAME***', catName);
+        response = response.replace('***PATH***',path);
+        response = response.replace('***PATH***',path);
+        res.end(response);
+    }
   }
 };
 

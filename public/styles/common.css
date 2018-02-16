@@ -84,18 +84,17 @@ body {
 
 #nav-bar ul li:hover{
     cursor: pointer;
-    background-color: #7499F5;
-    /*border: 1px solid white;*/
+    background-color: #F8E391;
     box-shadow: 0px 0px 16px 2px rgba(163,163,163,1);
 }
 #nav-bar ul li:active{
     cursor: pointer;
-    background-color: #7499F5;
+    background-color: #F8E391;
     border: 1px solid white;
 }
 #nav-bar ul li:focus{
     cursor: pointer;
-    background-color: #7499F5;
+    background-color: #F8E391;
     border: 1px solid white;
 }
 

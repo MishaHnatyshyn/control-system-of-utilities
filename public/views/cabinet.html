@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../styles/common.css">
+    <title>Персональний кабінет</title>
+</head>
+<body>
+<div class="container">
+    <div id="nav-bar">
+        <ul>
+            <li onclick="location.href = '/home'">Повернутись до системи</li>
+            <li onclick="cabinet('/currentMonth')">Загальна інформація</li>
+            <li onclick="cabinet('/gas')">Особові рахунки</li>
+            <li onclick="cabinet('/electricity')">Змінити особові рахунки</li>
+            <li onclick="cabinet('/water')">Змінити пароль</li>
+            <li onclick="cabinet('/garbage')">Вийти з системи</li>
+            <li onclick="cabinet('/canalization')">Довідка</li>
+            <li onclick="cabinet('/statistics')">Інформація про систему</li>
+        </ul>
+    </div>
+
+    <div id="work-area">
+    </div>
+</div>
+</body>
+</html>
