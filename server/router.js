@@ -8,23 +8,23 @@ const url = require('url');
 const getData = require('./getData');
 
 router.get('/', (req, res)=>{
-    res.end(fs.readFileSync('../public/views/index.html'));
+    res.end(fs.readFileSync('public/views/index.html'));
 });
 
 router.get('/cabinet', (req, res)=>{
-    res.end(fs.readFileSync('../public/views/cabinet.html'));
+    res.end(fs.readFileSync('public/views/cabinet.html'));
 });
 
 router.get('/current-month', (req, res)=>{
-    res.end(fs.readFileSync('../public/views/current-month.html'));
+    res.end(fs.readFileSync('public/views/current-month.html'));
 });
 
 router.get('/statistics', (req, res)=>{
-    res.end(fs.readFileSync('../public/views/statistics.html'));
+    res.end(fs.readFileSync('public/views/statistics.html'));
 });
 
 router.get('/gas', (req, res)=>{
-    let response = fs.readFileSync('../public/views/category.html','utf8');
+    let response = fs.readFileSync('public/views/category.html','utf8');
     response = response.replace('***CATEGORY_NAME***', 'gas');
     response = response.replace('***CATEGORY_NAME***', 'gas');
     response = response.replace('***PATH***','/gas');
@@ -33,7 +33,7 @@ router.get('/gas', (req, res)=>{
 });
 
 router.get('/electricity', (req, res)=>{
-    let response = fs.readFileSync('../public/views/category.html','utf8');
+    let response = fs.readFileSync('public/views/category.html','utf8');
     response = response.replace('***CATEGORY_NAME***', 'electricity');
     response = response.replace('***CATEGORY_NAME***', 'electricity');
     response = response.replace('***PATH***','/electricity');
@@ -42,7 +42,7 @@ router.get('/electricity', (req, res)=>{
 });
 
 router.get('/garbage', (req, res)=>{
-    let response = fs.readFileSync('../public/views/category.html','utf8');
+    let response = fs.readFileSync('public/views/category.html','utf8');
     response = response.replace('***CATEGORY_NAME***', 'garbage');
     response = response.replace('***CATEGORY_NAME***', 'garbage');
     response = response.replace('***PATH***','/garbage');
@@ -51,7 +51,7 @@ router.get('/garbage', (req, res)=>{
 });
 
 router.get('/canalization', (req, res)=>{
-    let response = fs.readFileSync('../public/views/category.html','utf8');
+    let response = fs.readFileSync('public/views/category.html','utf8');
     response = response.replace('***CATEGORY_NAME***', 'canalization');
     response = response.replace('***CATEGORY_NAME***', 'canalization');
     response = response.replace('***PATH***','/canalization');
@@ -60,7 +60,7 @@ router.get('/canalization', (req, res)=>{
 });
 
 router.get('/kvartplata', (req, res)=>{
-    let response = fs.readFileSync('../public/views/category.html','utf8');
+    let response = fs.readFileSync('public/views/category.html','utf8');
     response = response.replace('***CATEGORY_NAME***', 'kvartplata');
     response = response.replace('***CATEGORY_NAME***', 'kvartplata');
     response = response.replace('***PATH***','/kvartplata');
