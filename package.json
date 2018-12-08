@@ -1,0 +1,24 @@
+{
+  "name": "utilities-control-system",
+  "version": "1.0.0",
+  "description": "control system of utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MishaHnatyshyn/utilities-control-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MishaHnatyshyn/utilities-control-system/issues"
+  },
+  "homepage": "https://github.com/MishaHnatyshyn/utilities-control-system#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongodb": "^3.1.10"
+  }
+}

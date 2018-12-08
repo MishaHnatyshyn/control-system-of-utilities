@@ -14,7 +14,7 @@ const postData = (target) => {
     data[target].curr = document.getElementById('value-now-'+ target).value;
   }
   document.getElementById('addTo'+target).reset();
-  request(data,'POST');
+  request(data,'POST','insert');
 };
 
 const postDataMany = () => {
@@ -46,7 +46,7 @@ const postDataMany = () => {
   if (Object.keys(data).length) {
     data.month = document.getElementById('month').value;
     data.year = document.getElementById('year').value;
-    request(data,'POST');
+    request(data,'POST','insert');
   }
 
 };
@@ -59,7 +59,8 @@ const request = (data, method, header, callback) => {
       else callback(JSON.parse(this.responseText));
     }
   };
-  xhr.open(method, '?data='+JSON.stringify(data), true);
+  // xhr.open(method, '?data='+JSON.stringify(data), true);
+  xhr.open(method, `${header}?data=${JSON.stringify(data)}`, true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   if (method === 'GET')xhr.setRequestHeader('cause', header);
   xhr.send();

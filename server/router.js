@@ -1,68 +1,91 @@
 'use strict';
+const express = require('express');
+const router = express.Router();
 const fs = require('fs');
-const url = require('url');
-const stat = require('node-static');
-const db = require('./db');
 const insertData = require('./insertData');
+const db = require('./db');
+const url = require('url');
 const getData = require('./getData');
 
-const fileServer = new stat.Server('../public/', {
-  cache: 3600,
-  gzip: true
+router.get('/', (req, res)=>{
+    res.end(fs.readFileSync('public/views/index.html'));
 });
 
-const route = (req,res) => {
-  const data = url.parse(req.url, true).query;
-  const path = url.parse(req.url, true).pathname;
+router.get('/cabinet', (req, res)=>{
+    res.end(fs.readFileSync('public/views/cabinet.html'));
+});
 
-  if (Object.keys(data).length) {
+router.get('/current-month', (req, res)=>{
+    res.end(fs.readFileSync('public/views/current-month.html'));
+});
 
-    if (req.method == 'POST') {
+router.get('/statistics', (req, res)=>{
+    res.end(fs.readFileSync('public/views/statistics.html'));
+});
 
-      insertData.insert(data, db);
-      res.end();
-    }
-    if (req.method == 'GET') {
+router.get('/gas', (req, res)=>{
+    let response = fs.readFileSync('public/views/category.html','utf8');
+    response = response.replace('***CATEGORY_NAME***', 'gas');
+    response = response.replace('***CATEGORY_NAME***', 'gas');
+    response = response.replace('***PATH***','/gas');
+    response = response.replace('***PATH***','/gas');
+    res.end(response);
+});
 
-      if (req.headers.cause === 'get-one')
-      getData.getOne(data, db, (response) => {
+router.get('/electricity', (req, res)=>{
+    let response = fs.readFileSync('public/views/category.html','utf8');
+    response = response.replace('***CATEGORY_NAME***', 'electricity');
+    response = response.replace('***CATEGORY_NAME***', 'electricity');
+    response = response.replace('***PATH***','/electricity');
+    response = response.replace('***PATH***','/electricity');
+    res.end(response);
+});
+
+router.get('/garbage', (req, res)=>{
+    let response = fs.readFileSync('public/views/category.html','utf8');
+    response = response.replace('***CATEGORY_NAME***', 'garbage');
+    response = response.replace('***CATEGORY_NAME***', 'garbage');
+    response = response.replace('***PATH***','/garbage');
+    response = response.replace('***PATH***','/garbage');
+    res.end(response);
+});
+
+router.get('/canalization', (req, res)=>{
+    let response = fs.readFileSync('public/views/category.html','utf8');
+    response = response.replace('***CATEGORY_NAME***', 'canalization');
+    response = response.replace('***CATEGORY_NAME***', 'canalization');
+    response = response.replace('***PATH***','/canalization');
+    response = response.replace('***PATH***','/canalization');
+    res.end(response);
+});
+
+router.get('/kvartplata', (req, res)=>{
+    let response = fs.readFileSync('public/views/category.html','utf8');
+    response = response.replace('***CATEGORY_NAME***', 'kvartplata');
+    response = response.replace('***CATEGORY_NAME***', 'kvartplata');
+    response = response.replace('***PATH***','/kvartplata');
+    response = response.replace('***PATH***','/kvartplata');
+    res.end(response);
+});
+
+router.get('/get-one\*',(req, res)=>{
+    const data = url.parse(req.url, true).query;
+    getData.getOne(data, db, (response) => {
         res.end(response);
-      });
-      else if (req.headers.cause === 'get-many')
-      getData.getMany(data, db, (response) => {
+    });
+});
+
+router.get('/get-many\*',(req, res)=>{
+    const data = url.parse(req.url, true).query;
+    getData.getMany(data, db, (response) => {
         res.end(response);
-      });
-    }
-  } else {
+    });
+});
 
-    if (path.indexOf('styles') || path.indexOf('scripts')) {
+router.post('/insert\*', (req, res)=>{
+    const data = url.parse(req.url, true).query;
+    insertData.insert(data, db);
+    res.end();
+});
 
-      req.addListener('end', function () {
-        fileServer.serve(req, res);
-      }).resume();
-    }
-    if (path === '/' || path === '/home') {
-      res.end(fs.readFileSync('../public/views/index.html'));
-    }
-    if (path === '/cabinet'){
-        res.end(fs.readFileSync('../public/views/cabinet.html'));
-    }
-    if (path === '/current-month'){
-        res.end(fs.readFileSync('../public/views/current-month.html'));
-    }
-    if (path === '/statistics'){
-        res.end(fs.readFileSync('../public/views/statistics.html'));
-    }
-    if (path === '/gas' || path === '/electricity' || path === '/garbage' || path === '/canalization' || path === '/kvartplata'){
-        let response = fs.readFileSync('../public/views/category.html','utf8');
-        const catName = path.replace('/', '')[0].toUpperCase() + path.replace('/', '').slice(1);
-        response = response.replace('***CATEGORY_NAME***', catName);
-        response = response.replace('***CATEGORY_NAME***', catName);
-        response = response.replace('***PATH***',path);
-        response = response.replace('***PATH***',path);
-        res.end(response);
-    }
-  }
-};
-
-module.exports.route = route;
+module.exports = router;
