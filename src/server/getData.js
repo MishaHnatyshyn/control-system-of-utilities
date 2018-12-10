@@ -1,15 +1,15 @@
 'use strict';
 
 const getOne = (request, db, callback) => {
-  const data = JSON.parse(request.data);
-  const query = {};
-  for (let key in data.query){
-      query[key] = data.query[key];
-  }
+    const data = JSON.parse(request.data);
+    const query = {};
+    for (let key in data.query){
+        query[key] = data.query[key];
+    }
 
-  db.mydb.collection(data.category).find(query).toArray((err, result) => {
-      callback(JSON.stringify(result));
-  });
+    db.mydb.collection(data.category).find(query).toArray((err, result) => {
+        callback(JSON.stringify(result));
+    });
 };
 
 const getMany = (request, db, callback) => {
@@ -48,7 +48,7 @@ const reqursiveGetForYear = (db, obj1, obj2 ,index, targets,month, year, callbac
 
             for(let key in answer){
                 if (answer.gas[index].month === answer[key][index].month)
-                obj2[answer.gas[index].month][key] = answer[key][index];
+                    obj2[answer.gas[index].month][key] = answer[key][index];
             }
 
         }
