@@ -159,7 +159,28 @@ body {
 
 
 /*****************/
+#input-blocks{
+    display: flex;
+    flex-wrap: wrap;
+    flex: border-box;
+    justify-content: space-around;
+    align-items: stretch;
 
+}
+.input-block{
+    width: 23em;
+    background-color: grey;
+    padding: 1.3em;
+    border: 1px solid black;
+    border-radius: 2ex;
+    box-sizing:  content-box;
+    margin: 1em;
+
+
+}
+.all-inputs {
+  float: right;
+}
 table {
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 14px;

@@ -58,87 +58,95 @@
             <option value="2022">2022</option>
             <option value="2023">2023</option>
         </select><br>
-        <div id="monthgas">
-            <h2>gas</h2>
-            <form id="addTogas" onkeyup="calculate('gas') "><div id="value-befor-container-gas">
-                <label for="value-befor-gas">Попередній показник:</label>
-                <input type="text" name="value-befor-gas" id="value-befor-gas"><br>
-            </div>
-                <div id="value-now-container-gas">
-                    <label for="value-now-gas">Поточний показник:</label>
-                    <input type="text" name="value-now-gas" id="value-now-gas"><br>
-                </div><label for="cost-gas">Тариф:</label>
-                <input type="text" name="cost-gas" id="cost-gas"><br>
+        <div id = 'input-blocks'>
+        <div id="monthgas" class = 'input-block'>
+            <h2>Газ</h2><hr>
+            <form id="addTogas" onkeyup="calculate('gas') ">
+                    <p>Попередній показник:<input type="text" name="value-befor-gas" id="value-befor-gas" class = 'all-inputs'></p><br>
+                    <p>Поточний показник:<input type="text" name="value-now-gas" id="value-now-gas" class = 'all-inputs'></p><br>
+                    <p>Тариф:<input type="text" name="cost-gas" id="cost-gas" class = 'all-inputs'></p><br>
+                    <p>Сума<input type="text" name="sum-gas" id="sum-gas" readonly="" class = 'all-inputs'></p><br>
+                    <p>Оплачено<input type="checkbox" name="is_paid-gas" id="is_paid-gas" class = 'all-inputs'></p><br>
+            </form>
+        </div>
 
-                <label for="sum-gas">Сума</label>
-                <input type="text" name="sum-gas" id="sum-gas" readonly="" style="border: none"><br>
-                <label for="is_paid-gas">Оплачено</label>
-                <input type="checkbox" name="is_paid-gas" id="is_paid-gas"><br>
-
-            </form><div id="monthelectricity">
-            <h2>electricity</h2>
-            <form id="addToelectricity" onkeyup="calculate('electricity') "><div id="value-befor-container-electricity">
-                <label for="value-befor-electricity">Попередній показник:</label>
-                <input type="text" name="value-befor-electricity" id="value-befor-electricity"><br>
+        <div id="monthelectricity" class = 'input-block'>
+                <h2>electricity</h2>
+                <form id="addToelectricity" onkeyup="calculate('electricity') ">
+                    <div id="value-befor-container-electricity">
+                        <label for="value-befor-electricity">Попередній показник:</label>
+                        <input type="text" name="value-befor-electricity" id="value-befor-electricity" class = 'all-inputs'><br>
             </div>
-                <div id="value-now-container-electricity">
-                    <label for="value-now-electricity">Поточний показник:</label>
-                    <input type="text" name="value-now-electricity" id="value-now-electricity"><br>
-                </div><label for="cost-electricity">Тариф:</label>
+            <div id="value-now-container-electricity">
+                <label for="value-now-electricity">Поточний показник:</label>
+                <input type="text" name="value-now-electricity" id="value-now-electricity" class = 'all-inputs'><br>
+            </div>
+                <label for="cost-electricity">Тариф:</label>
                 <input type="text" name="cost-electricity" id="cost-electricity"><br>
-
                 <label for="sum-electricity">Сума</label>
                 <input type="text" name="sum-electricity" id="sum-electricity" readonly="" style="border: none"><br>
                 <label for="is_paid-electricity">Оплачено</label>
                 <input type="checkbox" name="is_paid-electricity" id="is_paid-electricity"><br>
+            </form>
+         </div>
 
-            </form><div id="monthwater">
+        <div id="monthwater" class = 'input-block'>
             <h2>water</h2>
-            <form id="addTowater" onkeyup="calculate('water') "><div id="value-befor-container-water">
+            <form id="addTowater" onkeyup="calculate('water') ">
+            <div id="value-befor-container-water">
                 <label for="value-befor-water">Попередній показник:</label>
                 <input type="text" name="value-befor-water" id="value-befor-water"><br>
             </div>
-                <div id="value-now-container-water">
-                    <label for="value-now-water">Поточний показник:</label>
-                    <input type="text" name="value-now-water" id="value-now-water"><br>
-                </div><label for="cost-water">Тариф:</label>
+            <div id="value-now-container-water">
+                <label for="value-now-water">Поточний показник:</label>
+                <input type="text" name="value-now-water" id="value-now-water"><br>
+            </div>
+                <label for="cost-water">Тариф:</label>
                 <input type="text" name="cost-water" id="cost-water"><br>
 
                 <label for="sum-water">Сума</label>
                 <input type="text" name="sum-water" id="sum-water" readonly="" style="border: none"><br>
                 <label for="is_paid-water">Оплачено</label>
                 <input type="checkbox" name="is_paid-water" id="is_paid-water"><br>
+            </form>
+         </div>
 
-            </form><div id="monthgarbage">
+        <div id="monthgarbage" class = 'input-block'>
             <h2>garbage</h2>
-            <form id="addTogarbage" onkeyup="calculate('garbage') "><label for="cost-garbage">Тариф:</label>
+            <form id="addTogarbage" onkeyup="calculate('garbage') ">
+                <label for="cost-garbage">Тариф:</label>
                 <input type="text" name="cost-garbage" id="cost-garbage"><br>
-
                 <label for="sum-garbage">Сума</label>
                 <input type="text" name="sum-garbage" id="sum-garbage" readonly="" style="border: none"><br>
                 <label for="is_paid-garbage">Оплачено</label>
                 <input type="checkbox" name="is_paid-garbage" id="is_paid-garbage"><br>
+            </form>
+         </div>
 
-            </form><div id="monthkvartplata">
+        <div id="monthkvartplata" class = 'input-block'>
             <h2>kvartplata</h2>
-            <form id="addTokvartplata" onkeyup="calculate('kvartplata') "><label for="cost-kvartplata">Тариф:</label>
+            <form id="addTokvartplata" onkeyup="calculate('kvartplata') ">
+                <label for="cost-kvartplata">Тариф:</label>
                 <input type="text" name="cost-kvartplata" id="cost-kvartplata"><br>
-
                 <label for="sum-kvartplata">Сума</label>
                 <input type="text" name="sum-kvartplata" id="sum-kvartplata" readonly="" style="border: none"><br>
                 <label for="is_paid-kvartplata">Оплачено</label>
                 <input type="checkbox" name="is_paid-kvartplata" id="is_paid-kvartplata"><br>
+            </form>
+         </div>
 
-            </form><div id="monthcanalization">
+        <div id="monthcanalization" class = 'input-block'>
             <h2>canalization</h2>
-            <form id="addTocanalization" onkeyup="calculate('canalization') "><div id="value-befor-container-canalization">
+            <form id="addTocanalization" onkeyup="calculate('canalization') ">
+             <div id="value-befor-container-canalization">
                 <label for="value-befor-canalization">Попередній показник:</label>
                 <input type="text" name="value-befor-canalization" id="value-befor-canalization"><br>
             </div>
-                <div id="value-now-container-canalization">
-                    <label for="value-now-canalization">Поточний показник:</label>
-                    <input type="text" name="value-now-canalization" id="value-now-canalization"><br>
-                </div><label for="cost-canalization">Тариф:</label>
+            <div id="value-now-container-canalization">
+                <label for="value-now-canalization">Поточний показник:</label>
+                <input type="text" name="value-now-canalization" id="value-now-canalization"><br>
+            </div>
+                <label for="cost-canalization">Тариф:</label>
                 <input type="text" name="cost-canalization" id="cost-canalization"><br>
 
                 <label for="sum-canalization">Сума</label>
@@ -146,8 +154,13 @@
                 <label for="is_paid-canalization">Оплачено</label>
                 <input type="checkbox" name="is_paid-canalization" id="is_paid-canalization"><br>
                 <div id="table"></div>
+            </form>
+         </div>
+        </div>
+             <br>
+         <button onclick="postDataMany()">Add all values</button>
+     </div>
+    </div>
 
-            </form><br><button onclick="postDataMany()">Add all values</button></div></div></div></div></div></div></div>
-</div>
 
 </body></html>
