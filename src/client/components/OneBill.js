@@ -6,11 +6,11 @@ export default class OneBill extends Component {
         super(props);
         this.state = {year: 'year', month: 'month',priviuseValue: '',currentValue: '', costEach: '', sumCost: '',paid: false};
     }
-    handlePriviuseValue = (e) => {this.setState({priviuseValue: +e.target.value});this.handleSumCost()};
-    handleCurrentValue = (e) => {this.setState({currentValue: +e.target.value});this.handleSumCost()};
-    handleCostEach = (e) => {this.setState({costEach: +e.target.value}); this.handleSumCost()};
-    handlePaid = (e) => {this.setState({paid: e.target.checked}); };
-    handleSumCost = () => {if (!this.state.priviuseValue || !this.state.currentValue || !this.state.costEach) return;
+    handlePriviuseValue = (e) => {this.setState({priviuseValue: +e.target.value}, this.handleSumCost)};
+    handleCurrentValue = (e) => {this.setState({currentValue: +e.target.value}, this.handleSumCost)};
+    handleCostEach = (e) => {this.setState({costEach: +e.target.value}, this.handleSumCost)};
+    handlePaid = (e) => {this.setState({paid: e.target.checked})};
+    handleSumCost = () => {if (!this.state.currentValue || !this.state.costEach) return;
                            this.setState((prevState)=>({sumCost: (prevState.currentValue - prevState.priviuseValue)* prevState.costEach}))};
     render() {
         const {bill} = this.props;
@@ -34,7 +34,7 @@ export default class OneBill extends Component {
                     <td>Поточний показник:</td>
                     <td><input type='number'
                                value = {this.currentValue}
-                               onChange = {this.handleCurrentValue && this.handleSumCost}
+                               onChange = {this.handleCurrentValue}
                                className = 'all-inputs' />
                     </td>
                 </tr>
@@ -43,13 +43,13 @@ export default class OneBill extends Component {
                     <td>Тариф:</td>
                     <td><input type='number'
                                value = {this.costEach}
-                               onChange = {this.handleCostEach && this.handleSumCost}
+                               onChange = {this.handleCostEach}
                                className = 'all-inputs' />
                     </td>
                 </tr>
                 <tr className = 'costInput'>
                     <td>Сума:</td>
-                    <td>{this.sumCost}</td>
+                    <td>{this.state.sumCost}</td>
                 </tr>
                 <tr>
                     <td>Оплачено</td>
