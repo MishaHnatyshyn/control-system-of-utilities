@@ -8,15 +8,15 @@ export default class NavBar extends React.Component{
 
         const {bills} = this.props;
         return (
-            <nav>
-                <ul>
-                    <li><Link to='/Bills'>Поточний місяць</Link></li>
-                    <li><Link to='/gas'>{bills[0].title}</Link></li>
-                    <li><Link to='/electricity'>{bills[1].title}</Link></li>
-                    <li><Link to='/waterSupply'>{bills[2].title}</Link></li>
-                    <li><Link to='/sewage'>{bills[3].title}</Link></li>
-                    <li><Link to='/rent'>{bills[4].title}</Link></li>
-                    <li><Link to='/removalOfGarbage'>{bills[5].title}</Link></li>
+            <nav className = 'col-sm-3 '>
+                <ul className = 'list-group'>
+                    <li className="list-group-item"><Link to='/bills'>Поточний місяць</Link></li>
+                    <li className="list-group-item"><Link to='/gas'>{bills[0].title}</Link></li>
+                    <li className="list-group-item"><Link to='/electricity'>{bills[1].title}</Link></li>
+                    <li className="list-group-item"><Link to='/waterSupply'>{bills[2].title}</Link></li>
+                    <li className="list-group-item"><Link to='/sewage'>{bills[3].title}</Link></li>
+                    <li className="list-group-item"><Link to='/rent'>{bills[4].title}</Link></li>
+                    <li className="list-group-item"><Link to='/removalOfGarbage'>{bills[5].title}</Link></li>
                 </ul>
             </nav>
         )

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
 import Main from './Main';
-
+import 'bootstrap/dist/css/bootstrap.css'
+import Header from "./Header";
 
 export default class App extends Component{
   render() {
@@ -13,10 +14,12 @@ export default class App extends Component{
               {categoryName: 'rent', title: 'Квартплата'},
               {categoryName: 'removalOfGarbage', title: 'Вивіз сміття'}];
       return <div>
-              <div>Hello world</div>
-              <Main bills = {this.billsArray}/>
-              <NavBar bills = {this.billsArray}/>
-           </div>
+                 <Header/>
+                  <div className = 'row'>
+                    <NavBar bills = {this.billsArray} />
+                    <Main bills = {this.billsArray} />
+                  </div>
+            </div>
   }
 }
 
