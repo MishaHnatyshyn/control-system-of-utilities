@@ -6,7 +6,7 @@ export default class Header extends Component{
          <nav className="navbar navbar-inverse">
              <div className="container-fluid">
                  <div className="navbar-header">
-                     <a className="navbar-brand page-header" href="#">Комуналка Live</a>
+                     <a className="navbar-brand page-header" href="http://localhost:3000/">Комуналка Live</a>
                  </div>
                  <ul className="nav navbar-nav navbar-right">
                      <li><a href="#"><span className="glyphicon glyphicon-user"></span>Реєстрація</a></li>
