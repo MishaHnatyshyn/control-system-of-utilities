@@ -68,21 +68,21 @@ router.get('/kvartplata', (req, res)=>{
   res.end(response);
 });
 
-router.get('/get-one\*',(req, res)=>{
+router.get(/\/get-one/,(req, res)=>{
   const data = url.parse(req.url, true).query;
   getData.getOne(data, db, (response) => {
     res.end(response);
   });
 });
 
-router.get('/get-many\*',(req, res)=>{
+router.get(/\/get-many/,(req, res)=>{
   const data = url.parse(req.url, true).query;
   getData.getMany(data, db, (response) => {
     res.end(response);
   });
 });
 
-router.post('/insert\*', (req, res)=>{
+router.post(/\/insert/, (req, res)=>{
   const data = url.parse(req.url, true).query;
   insertData.insert(data, db);
   res.end();
