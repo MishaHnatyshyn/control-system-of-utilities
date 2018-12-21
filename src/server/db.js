@@ -6,7 +6,7 @@ let mydb;
 
 const dbConnect = () => {
   MongoClient.connect(url, {useNewUrlParser: true},function (err, database) {
-    mydb = database.db('mydb');
+    mydb = database.db('ucs');
     console.log('data base connected!');
     module.exports.mydb = mydb;
   });
